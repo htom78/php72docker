@@ -57,7 +57,8 @@ php7-sockets
 
 
 #安装yac扩展
-RUN pecl install yac-2.0.2 && \
+RUN pecl channel-update pecl.php.net && \
+pecl install yac-2.2.1 && \
 echo -e "[yac] \n\
 extension=yac.so \n\
 yac.enable=1 \n\
