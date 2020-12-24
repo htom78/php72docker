@@ -45,7 +45,9 @@ RUN apk update && apk add --no-cache --virtual .build-deps \
     libmcrypt-dev \
     freetype-dev \
     libjpeg-turbo-dev \
+    shadow \
     libpng-dev \
+  && wget https://gitee.com/mirrors/oh-my-zsh/raw/master/tools/install.sh -O - | sh \
   && apk add --no-cache \
     curl \
     imagemagick \ 
@@ -76,12 +78,7 @@ RUN apk update && apk add --no-cache --virtual .build-deps \
   && pecl install -o -f redis \
   && rm -rf /tmp/pear \
   && docker-php-ext-enable redis \
-  && rm -r /var/cache/apk/*
-
-
-# https://github.com/docker-library/php/issues/240
-# https://gist.github.com/guillemcanal/be3db96d3caa315b4e2b8259cab7d07e
-# https://forum.alpinelinux.org/forum/installation/php-iconv-issue
+  && rm -r /var/cache/apk/* 
 
 RUN mkdir -p /usr/local/var/log/php7/
 RUN mkdir -p /usr/local/var/run/
@@ -137,30 +134,6 @@ RUN mkdir -p /var/log/cron \
  && touch /var/log/cron/cron.log
 
 VOLUME /var/log/cron
-
-#7.ADD-REDIS
-#RUN apk add redis
-
-#8.ADD-MARIADB
-#RUN apk add mariadb=10.3.12-r2
-#VOLUME /var/lib/mysql
-
-#设置环境变量，便于管理
-#ENV MARIADB_USER root
-#ENV MARIADB_PASS 123456
-##初始化数据库
-#COPY ./mariadb/db_init.sh /etc/
-#RUN chmod 775 /etc/db_init.sh
-#RUN /etc/db_init.sh
-
-#导出端口
-#EXPOSE 3306
-
-#添加启动文件
-#ADD ./mariadb/run.sh /root/run.sh
-#RUN chmod 775 /root/run.sh
-#设置默认启动命令
-#CMD ["/root/run.sh"]
 
 #9.添加启动脚本
 # Define working directory.
